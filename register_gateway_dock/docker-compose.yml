@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  register:
+    image: nutthaphonsu/register_gateway_dock:1.0
+    container_name: register_gateway
+    restart: "no"
+    ports:
+      - "7001:80"  
+  rabbitmq:
+    image: "rabbitmq:management"
+    container_name: rabbitmq
+    restart: "no"
+networks:
+  default:
+    external:
+      name: microservice_network

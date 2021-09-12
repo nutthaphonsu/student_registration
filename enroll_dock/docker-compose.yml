@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  enroll_rpc:
+    image: nutthaphonsu/enroll_rpc:1.0
+    container_name: enroll_rpc
+    restart: "no"
+    
+    depends_on:
+      - db
+    networks:
+      - microservice
+      - default
+      
+  db:
+    container_name: enroll_mariadb
+    image: mariadb:latest
+    restart: always
+    volumes:
+      - ./mariadb/initdb/:/docker-entrypoint-initdb.d
+      - ./mariadb/data/:/var/lib/mysql/
+    environment:
+      - MYSQL_ROOT_PASSWORD=devops101
+      - MYSQL_DATABASE=devops_db
+      - MYSQL_USER=devops
+      - MYSQL_PASSWORD=devops101
+      
+networks:
+  default:
+    external:
+      name: enroll_network
+  microservice:
+    external:
+      name: microservice_network

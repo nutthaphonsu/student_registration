@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  email_rpc:
+    image: nutthaphonsu/email_rpc:1.0
+    container_name: email_rpc
+    restart: "no"
+
+    networks:
+      - microservice
+      - default
+
+  smtp:
+    container_name: email_smtp
+    image: bytemark/smtp
+    restart: "no"
+    environment:
+      RELAY_HOST: smtp.office365.com
+      RELAY_PORT: 587
+      RELAY_USERNAME: hello.azcyy@hotmail.com
+      RELAY_PASSWORD: Ph0n@21716
+
+networks:
+  default:
+    external:
+      name: email_network
+  microservice:
+    external:
+      name: microservice_network
